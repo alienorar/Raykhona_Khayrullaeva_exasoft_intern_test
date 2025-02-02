@@ -1,15 +1,24 @@
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Typography, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../../../index.css';
 import authBg from '../../../assets/auth-bg.jpg';
+import { useSignInMutation } from '../hooks/mutations'; // Import the mutation hook
 
 const Login: React.FC = () => {
   const { Link } = Typography;
   const navigate = useNavigate();
 
+  // Use the sign-in mutation
+  const { mutate: signIn, isLoading } = useSignInMutation();
+
   const onFinish = async (values: any): Promise<void> => {
-    console.log("Login values:", values);
-    navigate("/dashboard"); // Login qilinganidan so'ng boshqa sahifaga yo'naltirish
+    try {
+      // Trigger the mutation
+      signIn(values);
+    } catch (error) {
+      message.error('Ошибка при входе. Пожалуйста, попробуйте снова.');
+
+    }
   };
 
   return (
@@ -62,7 +71,13 @@ const Login: React.FC = () => {
 
           {/* Login Button */}
           <Form.Item>
-            <Button block type="primary" htmlType="submit" className='bg-green-300 hover:bg-green-900 h-20 text-white rounded-sm'>
+            <Button
+              block
+              type="primary"
+              htmlType="submit"
+              className='bg-green-300 hover:bg-green-900 h-20 text-white rounded-sm'
+              loading={isLoading} // Show loading state
+            >
               Вход
             </Button>
           </Form.Item>

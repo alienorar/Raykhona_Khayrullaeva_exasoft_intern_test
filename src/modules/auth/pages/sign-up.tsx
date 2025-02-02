@@ -12,7 +12,7 @@ const Index: React.FC = () => {
     const onFinish = async (values: any): Promise<void> => {
         const response = await (values);
         mutate(response);
-        navigate("/sign-in");
+        navigate("/");
     };
 
     return (
@@ -36,7 +36,7 @@ const Index: React.FC = () => {
                     {/* Full Name Field */}
                     <Form.Item
                         label="Ф.И.О"
-                        name="full_name"
+                        name="fullName"
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                         rules={[{ required: true, message: 'Пожалуйста, введите ваше Ф.И.О!' }]}
